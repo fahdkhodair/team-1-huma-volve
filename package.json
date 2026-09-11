@@ -1,35 +1,18 @@
 {
-  "name": "task-management-api",
+  "name": "team-1-huma-volve",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000t\u0000e\u0000a\u0000m\u0000-\u00001\u0000-\u0000h\u0000u\u0000m\u0000a\u0000-\u0000v\u0000o\u0000l\u0000v\u0000e\u0000\r\u0000 \u0000",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node build/server.js"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fahdkhodair/team-1-huma-volve.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/fahdkhodair/team-1-huma-volve/issues"
-  },
-  "homepage": "https://github.com/fahdkhodair/team-1-huma-volve#readme",
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
-    "bcryptjs": "^3.0.3",
-    "cors": "^2.8.6",
+    "@google/genai": "^1.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.10.0",
     "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0",
-    "zod": "^4.6.1"
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
