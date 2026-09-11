@@ -15,134 +15,293 @@ tags:
     description: User endpoints
 
 components:
+
   securitySchemes:
-    cookieAuth:
+
+    accessToken:
       type: apiKey
       in: cookie
-      name: token
+      name: accessToken
+      description: JWT Access Token stored in an HttpOnly cookie
+
+    refreshToken:
+      type: apiKey
+      in: cookie
+      name: refreshToken
+      description: JWT Refresh Token stored in an HttpOnly cookie
 
 paths:
+
 
   /api/auth/register:
     post:
       tags:
         - Authentication
+
       summary: Register a new user
+
       requestBody:
         required: true
+
         content:
           application/json:
             schema:
               type: object
+
               required:
                 - name
                 - email
                 - password
+
               properties:
+
                 name:
                   type: string
                   example: Ahmed
+
                 email:
                   type: string
                   format: email
                   example: ahmed@example.com
+
                 password:
                   type: string
                   format: password
                   example: password123
+
       responses:
+
         "201":
           description: User created successfully
+
         "400":
           description: User already exists
+
 
   /api/auth/login:
     post:
       tags:
         - Authentication
+
       summary: Login
+
       requestBody:
         required: true
+
         content:
           application/json:
             schema:
               type: object
+
               required:
                 - email
                 - password
+
               properties:
+
                 email:
                   type: string
                   format: email
                   example: ahmed@example.com
+
                 password:
                   type: string
                   format: password
                   example: password123
+
       responses:
+
         "200":
           description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+
+                  message:
+                    type: string
+                    example: Login successful
+
+                  user:
+                    type: object
+                    properties:
+
+                      id:
+                        type: string
+                        example: "65a123456789"
+
+                      name:
+                        type: string
+                        example: Ahmed
+
+                      email:
+                        type: string
+                        example: ahmed@example.com
+
+                      role:
+                        type: string
+                        enum:
+                          - user
+                          - admin
+                        example: user
+
         "400":
           description: Invalid credentials
+
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Authentication
+
+      summary: Refresh access token
+
+      description: >
+        Uses the refreshToken cookie to generate a new accessToken.
+        The refresh token must be valid and not expired.
+
+      security:
+        - refreshToken: []
+
+      responses:
+
+        "200":
+          description: Access token refreshed successfully
+
+          content:
+            application/json:
+              schema:
+                type: object
+
+                properties:
+
+                  message:
+                    type: string
+                    example: Access token refreshed
+
+        "401":
+          description: Invalid or expired refresh token
+
 
   /api/auth/logout:
     post:
       tags:
         - Authentication
+
       summary: Logout
-      security:
-        - cookieAuth: []
+
+      description: >
+        Clears the accessToken and refreshToken cookies.
+
       responses:
+
         "200":
           description: Logout successful
+
         "401":
           description: Unauthorized
+
 
   /api/auth/me:
     get:
       tags:
         - Authentication
+
       summary: Get current user
+
       security:
-        - cookieAuth: []
+        - accessToken: []
+
       responses:
+
         "200":
           description: Current user retrieved
+
+          content:
+            application/json:
+              schema:
+                type: object
+
+                properties:
+
+                  message:
+                    type: string
+                    example: Current user retrieved
+
+                  user:
+                    type: object
+                    properties:
+
+                      id:
+                        type: string
+                        example: "65a123456789"
+
+                      email:
+                        type: string
+                        format: email
+                        example: ahmed@example.com
+
+                      role:
+                        type: string
+                        enum:
+                          - user
+                          - admin
+                        example: user
+
         "401":
           description: Unauthorized
+
 
   /api/users:
     get:
       tags:
         - Users
+
       summary: Get users
+
       security:
-        - cookieAuth: []
+        - accessToken: []
+
       responses:
+
         "200":
           description: List of users
+
         "401":
           description: Unauthorized
+
 
   /api/users/{id}:
     get:
       tags:
         - Users
+
       summary: Get user by ID
+
       security:
-        - cookieAuth: []
+        - accessToken: []
+
       parameters:
+
         - name: id
           in: path
           required: true
+
           description: User ID
+
           schema:
             type: string
-          example: "123"
+
+          example: "65a123456789"
+
       responses:
+
         "200":
           description: User found
+
         "401":
           description: Unauthorized
+
         "404":
           description: User not found
