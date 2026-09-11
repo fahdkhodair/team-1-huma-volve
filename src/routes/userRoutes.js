@@ -1,0 +1,10 @@
+const express = require("express");
+const { getAllUsers, getuserbyid, updateuserbyid, deleteuserbyid } = require("../controllers/userController");
+const auth = require("../middleware/authMiddleware");
+const roleMiddleware = require("../middleware/roleMiddleware");
+const router = express.Router();
+router.get("/users", auth, roleMiddleware("admin"), getAllUsers);
+router.get("/users/:id", auth, roleMiddleware("admin"), getuserbyid);
+router.patch("/users/:id", auth, roleMiddleware("admin"), updateuserbyid);
+router.delete("/users/:id", auth, roleMiddleware("admin"), deleteuserbyid);
+module.exports = router;
