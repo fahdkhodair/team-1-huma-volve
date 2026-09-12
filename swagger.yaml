@@ -1,0 +1,100 @@
+openapi: 3.0.0
+
+info:
+  title: Team 1 Huma Volve API
+  version: 1.0.0
+  description: API documentation for Team 1 Huma Volve project
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /api/ai/generate:
+    post:
+      summary: Generate AI content
+      description: Generate AI-powered content using Google Gemini.
+      tags:
+        - AI
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt sent to Gemini
+                  example: Write a short description about smart agriculture
+
+      responses:
+        "200":
+          description: AI content generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      content:
+                        type: string
+                        example: Smart agriculture uses technology to improve farming efficiency.
+
+        "400":
+          description: Invalid or missing prompt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Prompt is required
+                  code:
+                    type: string
+                    example: INVALID_INPUT
+
+        "500":
+          description: Internal server or AI configuration error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Internal Server Error
+                  code:
+                    type: string
+                    example: AI_CONFIG_ERROR
+
+        "502":
+          description: Gemini service failure or invalid Gemini response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Gemini service failed
+                  code:
+                    type: string
+                    example: AI_SERVICE_ERROR
