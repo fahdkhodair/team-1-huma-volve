@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose'    
 const projectMemberSchema = new Schema({
     project: {
         type: Schema.Types.ObjectId,
@@ -19,4 +19,4 @@ const projectMemberSchema = new Schema({
     timestamps: true
 });
 
-module.exports = model('ProjectMember', projectMemberSchema);
+export default model('ProjectMember', projectMemberSchema);
