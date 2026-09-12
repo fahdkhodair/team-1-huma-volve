@@ -21,6 +21,14 @@ const project = require('../models/project')
         res.status(500).json({message:error.message});
     }
 }
+const getprojects = async(req,res) =>{
+    try {
+        const projects = await project.find().populate("owner members.user", "name email");
+        res.status(200).json(projects);
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
+}
  const updateProject = async (req, res, next) => {
   try {
     const { name, description, status } = req.body;
@@ -58,6 +66,7 @@ const project = require('../models/project')
 module.exports = {
     createproject,
     getproject,
+    getprojects,
     updateProject,
     deleteproject,
 };
