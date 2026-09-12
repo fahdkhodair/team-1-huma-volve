@@ -4,6 +4,6 @@ const { addMember, removeMember } = require('../controllers/projectmembercontrol
 const { authMiddleware, projectPermissionMiddleware } = require('../middleware/projectPermissionMiddleware.js');
 const {validate} = require('../middleware/validateMiddleware.js');
 const router = express.Router();
-router.post('/id/members',authMiddleware,validate,projectPermissionMiddleware, protect, addMember);
-router.delete('/:id/members/:userId', authMiddleware,validate, projectPermissionMiddleware, protect, removeMember);
+router.post('/id/members',validate,projectPermissionMiddleware, protect, addMember);
+router.delete('/:id/members/:userId',validate, projectPermissionMiddleware, protect, removeMember);
 module.exports = router;
