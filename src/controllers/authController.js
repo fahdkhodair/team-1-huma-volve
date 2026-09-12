@@ -158,16 +158,10 @@ export const RefreshToken = async (req, res, next) => {
 
 
 export const Logout = async (req, res) => {
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken", {
-    path: "/api/auth/refresh",
-  });
-
   res.status(200).json({
     message: "Logout successful",
   });
 };
-
 
 export const GetCurrentUser = async (req, res) => {
   res.status(200).json({
