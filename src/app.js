@@ -4,8 +4,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const connectDB = require("./config/db");
 const aiRoutes = require("./routes/aiRoutes");
-const projectMemberRoutes = require("./routes/projectmember");
-const projectRoutes = require("./routes/project");
+const projectMemberRoutes = require("./routes/projectmemberRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const swaggerDocument = swaggerJsDoc({
   definition: {
