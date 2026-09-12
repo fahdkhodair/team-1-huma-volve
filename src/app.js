@@ -1,21 +1,29 @@
 const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
-const YAML = require("yamljs");
-
+const swaggerJsDoc = require("swagger-jsdoc");
+const connectDB = require("./config/db");
 const aiRoutes = require("./routes/aiRoutes");
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const taskRoutes = require("./routes/taskRoutes");
-
+const projectMemberRoutes = require("./routes/projectmemberRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
-
-const swaggerDocument = YAML.load("./swagger.yaml");
-
+const swaggerDocument = swaggerJsDoc({
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Huma Volve API",
+      version: "1.0.0",
+      description: "API documentation for Huma Volve"
+    }
+  },
+  apis: ["./src/routes/*.js"]
+});
 const app = express();
-
 app.use(cors());
 app.use(express.json());
+
+// Database connection
+connectDB();
 
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -29,9 +37,13 @@ app.get("/", (req, res) => {
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/task", taskRoutes);
+
+// Project Member Routes
+app.use("/api/projects", projectMemberRoutes);
+
+// Project Routes
+app.use("/api/projects", projectRoutes);
+
 // Global Error Middleware
 app.use(errorMiddleware);
 

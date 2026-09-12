@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const projectSchema = new mongoose.Schema({
-    Name:{
+       Name:{
         type: String,
         required: true,
         trim: true,
@@ -30,6 +30,5 @@ const projectSchema = new mongoose.Schema({
         enum: ["active", "inactive"],
         default: "active",
     },
-})
-
+},{timestamps: true})
 module.exports = mongoose.model("Project", projectSchema)

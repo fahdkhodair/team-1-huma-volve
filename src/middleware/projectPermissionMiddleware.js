@@ -1,4 +1,4 @@
-export const projectPermissionMiddleware = (req, res, next) => {
+ const projectPermissionMiddleware = (req, res, next) => {
     const { user } = req;
     const { projectId } = req.params;
     
@@ -14,3 +14,4 @@ export const projectPermissionMiddleware = (req, res, next) => {
     
     next();
 };
+module.exports = projectPermissionMiddleware;
