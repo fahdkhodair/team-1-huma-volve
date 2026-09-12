@@ -1,4 +1,4 @@
-const project = require('../models/project.js')
+const project = require('../models/project')
   const createproject = async(req,res) =>{
     try {
         const {name,description} = req.body;
@@ -16,22 +16,6 @@ const project = require('../models/project.js')
   const getproject = async(req,res) =>{
     try {
         const project = await project.findById(req.params.id).populate("owner members.user", "name email");
-        res.status(200).json(project);
-    } catch (error) {
-        res.status(500).json({message:error.message});
-    }
-}
-  const getprojects = async(req,res) =>{
-    try {
-        const projects=await project.find({owner:req.user.id}).populate("owner members.user", "name email");;
-        res.status(200).json(projects);
-    } catch (error) {
-        res.status(500).json({message:error.message});
-    }
-}
-  const getproject = async(req,res) =>{
-    try {
-        const project=await project.findById(req.params.id).populate("owner members.user", "name email");
         res.status(200).json(project);
     } catch (error) {
         res.status(500).json({message:error.message});
@@ -74,7 +58,6 @@ const project = require('../models/project.js')
 module.exports = {
     createproject,
     getproject,
-    getprojects,
     updateProject,
     deleteproject,
 };
