@@ -86,23 +86,10 @@ export const Login = async (req, res, next) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 15 * 60 * 1000, 
-    });
-
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, 
-      path: "/api/auth/refresh",
-    });
-
     res.status(200).json({
       message: "Login successful",
+      accessToken,
+      refreshToken,
       user,
     });
   } catch (error) {
@@ -114,9 +101,8 @@ export const Login = async (req, res, next) => {
 
 export const RefreshToken = async (req, res, next) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.body.refreshToken;
 
-  
     if (!refreshToken) {
       return res.status(401).json({
         message: "Refresh token not found",
@@ -138,15 +124,9 @@ export const RefreshToken = async (req, res, next) => {
 
     const accessToken = generateAccessToken(user);
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
-    });
-
     res.status(200).json({
       message: "Access token refreshed",
+      accessToken,
     });
   } catch (error) {
     return res.status(401).json({
