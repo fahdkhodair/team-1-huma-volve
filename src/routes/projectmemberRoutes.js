@@ -1,5 +1,4 @@
 const express = require('express');
-const router = require('express');
 const { protect } = require('../middleware/authMiddleware.js');
 const { addMember, removeMember } = require('../controllers/projectmembercontroller.js');
 const { authMiddleware, projectPermissionMiddleware } = require('../middleware/projectPermissionMiddleware.js');
