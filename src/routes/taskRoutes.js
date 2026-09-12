@@ -10,29 +10,29 @@ const {
     updateTask,
     deleteTask,
     assignTask,
-} = require("../controllers/task.controller");
+} = require("../controllers/taskController");
 
-const auth = require("../middlewares/auth.middleware");
+const authMiddleware = require("../middleware/authMiddleware");
 
 // Create Task
-router.post("/", auth, createTask);
+router.post("/", authMiddleware, createTask);
 
 // Get All Tasks
-router.get("/", auth, getAllTasks);
+router.get("/", authMiddleware, getAllTasks);
 
 // Get Tasks By Project
-router.get("/project/:projectId", auth, getTasksByProject);
+router.get("/project/:projectId", authMiddleware, getTasksByProject);
 
 // Get Task By ID
-router.get("/:id", auth, getTaskById);
+router.get("/:id", authMiddleware, getTaskById);
 
 // Update Task
-router.patch("/:id", auth, updateTask);
+router.patch("/:id", authMiddleware, updateTask);
 
 // Delete Task
-router.delete("/:id", auth, deleteTask);
+router.delete("/:id", authMiddleware, deleteTask);
 
 // Assign Task
-router.patch("/:id/assign", auth, assignTask);
+router.patch("/:id/assign", authMiddleware, assignTask);
 
 module.exports = router;

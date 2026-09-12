@@ -4,6 +4,10 @@ const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 
 const aiRoutes = require("./routes/aiRoutes");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const taskRoutes = require("./routes/taskRoutes");
+
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const swaggerDocument = YAML.load("./swagger.yaml");
@@ -25,7 +29,9 @@ app.get("/", (req, res) => {
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
-
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/task", taskRoutes);
 // Global Error Middleware
 app.use(errorMiddleware);
 

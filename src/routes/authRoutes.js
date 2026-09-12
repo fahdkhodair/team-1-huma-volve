@@ -1,14 +1,14 @@
-import { Router } from "express";
+const  { Router } = require("express");
 
-import {
+const {
   Login,
   Register,
   Logout,
   GetCurrentUser,
   RefreshToken,
-} from "../controllers/authController.js";
+} = require("../controllers/authController.js");
 
-import authMiddleware from "../middleware/authMiddleware.js";
+const authMiddleware =require( "../middleware/authMiddleware.js");
 
 const authRouter = Router();
 
@@ -22,4 +22,4 @@ authRouter.post("/logout", authMiddleware, Logout);
 
 authRouter.get("/me", authMiddleware, GetCurrentUser);
 
-export default authRouter;
+module.exports = authRouter;
