@@ -2,21 +2,21 @@ const User = require("../models/User");
 exports.getAllUsers = async (req, res) => {
   const users = await User.find();
 
-  res.json(users);
+  res.status(200).json({ message: "All users retrieved", users });
 };
 exports.getuserbyid = async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id);
-  res.json(user);
-}
+  res.status(200).json({ message: "User retrieved", user });
+};
 exports.updateuserbyid = async (req, res) => {
   const id = req.params.id;
   const { name, email, password } = req.body;
   const user = await User.findByIdAndUpdate(id, { name, email, password });
-  res.json(user);
-}
+  res.status(200).json({ message: "User updated", user });
+};
 exports.deleteuserbyid = async (req, res) => {
   const id = req.params.id;
   const user = await User.findByIdAndDelete(id);
-  res.json(user);
-}
+  res.status(200).json({ message: "User deleted", user });
+};
