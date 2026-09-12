@@ -1,15 +1,22 @@
-import User from "../models/User.js";
-
-
-export const GetAllUsers = async (__req, res) => {
+const User = require("../models/User");
+exports.getAllUsers = async (req, res) => {
   const users = await User.find();
+
   res.status(200).json({ message: "All users retrieved", users });
 };
-export const GetUserById = async (req, res) => {
-  const { id } = req.params;
+exports.getuserbyid = async (req, res) => {
+  const id = req.params.id;
   const user = await User.findById(id);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
   res.status(200).json({ message: "User retrieved", user });
+};
+exports.updateuserbyid = async (req, res) => {
+  const id = req.params.id;
+  const { name, email, password } = req.body;
+  const user = await User.findByIdAndUpdate(id, { name, email, password });
+  res.status(200).json({ message: "User updated", user });
+};
+exports.deleteuserbyid = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findByIdAndDelete(id);
+  res.status(200).json({ message: "User deleted", user });
 };

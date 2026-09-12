@@ -1,8 +1,8 @@
 openapi: 3.0.0
 
 info:
-  title: Huma Vlove API
-  description: Authentication and Users API
+  title: Team 1 Huma Volve API
+  description: Authentication, Users and AI API for Team 1 Huma Volve project
   version: 1.0.0
 
 servers:
@@ -13,11 +13,11 @@ tags:
     description: Authentication endpoints
   - name: Users
     description: User endpoints
+  - name: AI
+    description: AI endpoints
 
 components:
-
   securitySchemes:
-
     accessToken:
       type: apiKey
       in: cookie
@@ -32,48 +32,38 @@ components:
 
 paths:
 
-
   /api/auth/register:
     post:
       tags:
         - Authentication
-
       summary: Register a new user
 
       requestBody:
         required: true
-
         content:
           application/json:
             schema:
               type: object
-
               required:
                 - name
                 - email
                 - password
-
               properties:
-
                 name:
                   type: string
                   example: Ahmed
-
                 email:
                   type: string
                   format: email
                   example: ahmed@example.com
-
                 password:
                   type: string
                   format: password
                   example: password123
 
       responses:
-
         "201":
           description: User created successfully
-
         "400":
           description: User already exists
 
@@ -82,35 +72,28 @@ paths:
     post:
       tags:
         - Authentication
-
       summary: Login
 
       requestBody:
         required: true
-
         content:
           application/json:
             schema:
               type: object
-
               required:
                 - email
                 - password
-
               properties:
-
                 email:
                   type: string
                   format: email
                   example: ahmed@example.com
-
                 password:
                   type: string
                   format: password
                   example: password123
 
       responses:
-
         "200":
           description: Login successful
           content:
@@ -118,27 +101,21 @@ paths:
               schema:
                 type: object
                 properties:
-
                   message:
                     type: string
                     example: Login successful
-
                   user:
                     type: object
                     properties:
-
                       id:
                         type: string
                         example: "65a123456789"
-
                       name:
                         type: string
                         example: Ahmed
-
                       email:
                         type: string
                         example: ahmed@example.com
-
                       role:
                         type: string
                         enum:
@@ -154,7 +131,6 @@ paths:
     post:
       tags:
         - Authentication
-
       summary: Refresh access token
 
       description: >
@@ -165,17 +141,13 @@ paths:
         - refreshToken: []
 
       responses:
-
         "200":
           description: Access token refreshed successfully
-
           content:
             application/json:
               schema:
                 type: object
-
                 properties:
-
                   message:
                     type: string
                     example: Access token refreshed
@@ -188,14 +160,12 @@ paths:
     post:
       tags:
         - Authentication
-
       summary: Logout
 
       description: >
         Clears the accessToken and refreshToken cookies.
 
       responses:
-
         "200":
           description: Logout successful
 
@@ -207,41 +177,32 @@ paths:
     get:
       tags:
         - Authentication
-
       summary: Get current user
 
       security:
         - accessToken: []
 
       responses:
-
         "200":
           description: Current user retrieved
-
           content:
             application/json:
               schema:
                 type: object
-
                 properties:
-
                   message:
                     type: string
                     example: Current user retrieved
-
                   user:
                     type: object
                     properties:
-
                       id:
                         type: string
                         example: "65a123456789"
-
                       email:
                         type: string
                         format: email
                         example: ahmed@example.com
-
                       role:
                         type: string
                         enum:
@@ -257,14 +218,12 @@ paths:
     get:
       tags:
         - Users
-
       summary: Get users
 
       security:
         - accessToken: []
 
       responses:
-
         "200":
           description: List of users
 
@@ -276,27 +235,21 @@ paths:
     get:
       tags:
         - Users
-
       summary: Get user by ID
 
       security:
         - accessToken: []
 
       parameters:
-
         - name: id
           in: path
           required: true
-
           description: User ID
-
           schema:
             type: string
-
           example: "65a123456789"
 
       responses:
-
         "200":
           description: User found
 
@@ -305,3 +258,94 @@ paths:
 
         "404":
           description: User not found
+
+
+  /api/ai/generate:
+    post:
+      summary: Generate AI content
+      description: Generate AI-powered content using Google Gemini.
+      tags:
+        - AI
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: The prompt sent to Gemini
+                  example: Write a short description about smart agriculture
+
+      responses:
+        "200":
+          description: AI content generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      content:
+                        type: string
+                        example: Smart agriculture uses technology to improve farming efficiency.
+
+        "400":
+          description: Invalid or missing prompt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Prompt is required
+                  code:
+                    type: string
+                    example: INVALID_INPUT
+
+        "500":
+          description: Internal server or AI configuration error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Internal Server Error
+                  code:
+                    type: string
+                    example: AI_CONFIG_ERROR
+
+        "502":
+          description: Gemini service failure or invalid Gemini response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Gemini service failed
+                  code:
+                    type: string
+                    example: AI_SERVICE_ERROR
