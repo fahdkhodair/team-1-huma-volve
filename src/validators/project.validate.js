@@ -1,5 +1,5 @@
-const z = require("zod");
-export const projectSchema = z.object({
+const z = require("zod");    
+ const projectSchema = z.object({
     name: z.string().min(3).max(100),
     description: z.string().min(3).max(500),
     status: z.enum(["active", "inactive"]),
@@ -8,9 +8,9 @@ export const projectSchema = z.object({
  const createProjectSchema = projectSchema;
  const getProjectSchema = projectSchema;
  const getAllProjectsSchema = projectSchema;
- const updateProjectSchema = projectSchema.partial();
+  const updateProjectSchema = projectSchema.partial();
  const deleteProjectSchema = projectSchema;
- const projectParamsSchema = z.object({
+  const projectParamsSchema = z.object({
     id: z.string().uuid(),
 });
 module.exports = {
@@ -19,5 +19,5 @@ module.exports = {
     getAllProjectsSchema,
     updateProjectSchema,
     deleteProjectSchema,
-    projectParamsSchema
-}
+    projectParamsSchema,
+};

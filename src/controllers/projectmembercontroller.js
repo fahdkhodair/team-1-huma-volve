@@ -1,6 +1,6 @@
-const member = require("../models/Project Members");
+const member = require("../models/Project Members.js");
 
-export const addMember = async (req, res) => {
+  const addMember = async (req, res) => {
     try {
         const{userId} =req.body;
         const project = await member.findById(req.params.id);
@@ -25,7 +25,8 @@ export const addMember = async (req, res) => {
         res.status(500).json({message:error.message});
     }
 }
-export const removeMember = async (req, res, next) => {
+
+  const removeMember = async (req, res, next) => {
   try {
     const { id, userId } = req.params;
 
@@ -66,4 +67,8 @@ export const removeMember = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+module.exports = {
+    addMember,
+    removeMember,
 };
