@@ -1,11 +1,16 @@
-import z from "zod";
- export const projectMemberSchema = z.object({
+const z = require("zod");
+ const projectMemberSchema = z.object({
     projectId: z.string().uuid(),
     userId: z.string().uuid(),
     role: z.enum(["admin", "member"]),
 });
- export const addMemberSchema = projectMemberSchema;
- export const removeMemberSchema = projectMemberSchema;
- export const memberParamsSchema = z.object({
+ const addMemberSchema = projectMemberSchema;
+ const removeMemberSchema = projectMemberSchema;
+ const memberParamsSchema = z.object({
     id: z.string().uuid(),
 });
+module.exports = {
+    addMemberSchema,
+    removeMemberSchema,
+    memberParamsSchema,
+};
